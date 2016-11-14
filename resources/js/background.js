@@ -1,0 +1,1 @@
+doubleshift.background.init();

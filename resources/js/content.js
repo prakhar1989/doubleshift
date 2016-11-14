@@ -1,0 +1,1 @@
+doubleshift.content.init();
