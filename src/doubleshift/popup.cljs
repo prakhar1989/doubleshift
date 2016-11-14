@@ -7,7 +7,7 @@
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (defn greeting [msg]
-  [:h1 msg])
+  [:h4 msg])
 
 (defn set-active
   "activates the tab in the current window"
@@ -24,6 +24,12 @@
                (rand-nth)
                (set-active))))))
 
+(defn render-app []
+  [:div
+   [greeting "DoubleShift!"]
+   [:input {:type "button" :value "Feeling lucky!"
+            :on-click get-all-tabs}]])
+
 (defn init []
-  (get-all-tabs)
-  (console/log "hello world from doubleshift"))
+  (r/render [render-app]
+            (js/document.getElementById "app")))
