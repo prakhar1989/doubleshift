@@ -15,20 +15,6 @@
     "48": "icon48.png",
     "128": "icon128.png"
   },
- "content_scripts": [
-    {
-      "matches": ["*://*/*"],
-      "js": ["doubleshift.js", "content.js"],
-      "run_at": "document_end"
-    }
-  ],
-  "chrome_url_overrides": {
-    "newtab": "new-tab.html"
-  },
-  "background": {
-    "scripts": ["doubleshift.js", "background.js"],
-    "persistent": false
-  },
   "manifest_version": 2
 }
 
