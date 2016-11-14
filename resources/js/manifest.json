@@ -10,6 +10,14 @@
       }
 
   },
+  "commands":{
+    "_execute_browser_action": {
+      "suggested_key": {
+	"default": "Ctrl+Shift+Space"
+      },
+      "description": "Show the Double Shift Pop-up"
+    }
+  },
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",
