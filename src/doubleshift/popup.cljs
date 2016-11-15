@@ -7,14 +7,11 @@
 
 (defonce tablist (r/atom []))
 
-(defn set-active
-  "activates the tab in the current window"
-  [tab]
+(defn set-active [tab]
   (let [{id :id} tab]
     (tabs/update id {:active true})))
 
 (defn get-all-tabs []
-  "returns a channel of all the open tabs in the current window"
   (let [tabs-chan (tabs/query {:currentWindow true})]
     (go
       (let [alltabs (<! tabs-chan)]
@@ -26,12 +23,13 @@
   (let [{url :url title :title} tab]
     [:div [:p title]]))
 
+(defn filter-tabs [e]
+  (console/log "got input"))
+
 (defn render-app []
   [:div
-   [:h2 "DoubleShift!"]
-   [:hr]
-   [:div (map render-tab @tablist)]
-   [:input {:type "button" :value "Feeling lucky!" }]])
+   [:input {:type "text" :placeholder "Search tabs..."
+            :on-change filter-tabs}]])
 
 (defn init []
   (get-all-tabs)          ; fetch the data

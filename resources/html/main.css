@@ -1,0 +1,15 @@
+body {
+    width: 400px;
+    margin:0;
+    padding:0px;
+    font-family: Avenir, 'Lucida Grande', Tahoma, sans-serif;
+}
+
+*:focus { outline: none; }
+
+input[type="text"] {
+    padding: 8px 10px;
+    width: 375px;
+    font-size: 14px;
+    font-family: Avenir;
+}
