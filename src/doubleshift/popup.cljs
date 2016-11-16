@@ -23,14 +23,16 @@
     (go
       (let [alltabs (<! tabs-chan)]
         (->>
-          (map #(select-keys % [:url :title :id :favicon]) alltabs)
+          (map #(select-keys % [:url :title :id :favIconUrl]) alltabs)
           (reset! tablist))))))
 
 (defn render-tab [tab]
-  (let [{url :url title :title id :id} tab]
+  (let [{url :url title :title id :id favicon :favIconUrl} tab]
     [:li {:key id}
-     [:div [:p (trim title)]
-           [:a {:href url} (trim url)]]]))
+     [:img {:src favicon}]
+     [:div
+       [:p (trim title)]
+       [:a {:href url} (trim url)]]]))
 
 (defn render-tabs []
   (map render-tab @tablist))
