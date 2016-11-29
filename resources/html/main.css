@@ -14,12 +14,15 @@ ul {
 }
 
 ul li {
-    margin: 10px 0;
     display: flex;
-    padding: 0 12px;
+    padding: 10px 12px;
     border-bottom: 1px solid #eee;
     align-items: center;
-    padding-bottom: 10px;
+}
+
+ul li.selected {
+    background: #eee;
+    border: 1px dashed #ddd;
 }
 
 ul li img {

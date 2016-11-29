@@ -6,7 +6,7 @@
   (:require-macros [cljs.core.async.macros :refer [go go-loop]]))
 
 (defonce tablist (r/atom []))
-(defonce filtered-tabs (r/atom []))
+(defonce selected-index (r/atom 0))
 
 (defn trim [s]
   ; TODO: splitting should ideally be done at word
@@ -26,17 +26,20 @@
           (map #(select-keys % [:url :title :id :favIconUrl]) alltabs)
           (reset! tablist))))))
 
-(defn render-tab [tab]
-  (let [{url :url title :title id :id favicon :favIconUrl} tab]
-    [:li {:key id}
+;; renders each tab
+(defn render-tab [idx tab]
+  (let [{url :url title :title id :id favicon :favIconUrl} tab
+        selected? (= idx @selected-index)]
+    [:li {:key id :class (if selected? "selected" "")}
      [:img {:src favicon}]
      [:div
        [:p (trim title)]
        [:a {:href url} (trim url)]]]))
 
 (defn render-tabs []
-  (map render-tab @tablist))
+  (map-indexed render-tab @tablist))
 
+; filter the tabs based on query
 (defn filter-tabs [query]
   (console/log query))
 
