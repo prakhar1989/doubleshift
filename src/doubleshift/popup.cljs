@@ -30,23 +30,33 @@
 (defn render-tab [idx tab]
   (let [{url :url title :title id :id favicon :favIconUrl} tab
         selected? (= idx @selected-index)]
-    [:li {:key id :class (if selected? "selected" "")}
+    [:li {:key id :class (if selected? "selected")}
      [:img {:src favicon}]
      [:div
        [:p (trim title)]
        [:a {:href url} (trim url)]]]))
 
 (defn render-tabs []
-  (map-indexed render-tab @tablist))
+  (doall (map-indexed render-tab @tablist)))
 
 ; filter the tabs based on query
 (defn filter-tabs [query]
   (console/log query))
 
+;; render the tab input
+(defn tab-input []
+   [:input {:type "text" :placeholder "Search tabs..."
+            :on-change #(filter-tabs (-> % .-target .-value))
+            :on-key-down #(case (.-which %)
+                            13 (do (set-active
+                                     (nth @tablist @selected-index)))
+                            38 (swap! selected-index dec)
+                            40 (swap! selected-index inc)
+                            nil)}])
+
 (defn render-app []
   [:div
-   [:input {:type "text" :placeholder "Search tabs..."
-            :on-change #(filter-tabs (-> % .-target .-value))}]
+   (tab-input)
    [:ul (render-tabs)]])
 
 (defn init []
