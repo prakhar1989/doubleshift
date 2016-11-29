@@ -43,6 +43,13 @@
 (defn filter-tabs [query]
   (console/log query))
 
+; updates the selected index
+; by dx in a cyclic manner
+(defn update-index [dx]
+  (do (let [n (count @tablist)]
+        (reset! selected-index
+                (mod (+ @selected-index dx) n)))))
+
 ;; render the tab input
 (defn tab-input []
    [:input {:type "text" :placeholder "Search tabs..."
@@ -50,8 +57,8 @@
             :on-key-down #(case (.-which %)
                             13 (do (set-active
                                      (nth @tablist @selected-index)))
-                            38 (swap! selected-index dec)
-                            40 (swap! selected-index inc)
+                            38 (update-index -1)
+                            40 (update-index  1)
                             nil)}])
 
 (defn render-app []
