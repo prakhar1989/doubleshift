@@ -26,18 +26,24 @@
           (map #(select-keys % [:url :title :id :favIconUrl]) alltabs)
           (reset! tablist))))))
 
-;; renders each tab
-(defn render-tab [idx tab]
-  (let [{url :url title :title id :id favicon :favIconUrl} tab
-        selected? (= idx @selected-index)]
-    [:li {:key id :class (if selected? "selected")}
-     [:img {:src favicon}]
-     [:div
-       [:p (trim title)]
-       [:a {:href url} (trim url)]]]))
+(defn tab-html
+  [idx tab]
+  (let [{url :url title :title id :id favicon :favIconUrl} tab]
+    (r/create-class
+      {:reagent-render
+       (fn [idx tab]
+         [:li {:class (if (= idx @selected-index) "selected")}
+          [:img {:src favicon}]
+          [:div
+           [:p (trim title)]
+           [:a {:href url} (trim url)]]])
+       :component-did-mount #(console/log (.-offsetTop (r/dom-node %))) })))
 
 (defn render-tabs []
-  (doall (map-indexed render-tab @tablist)))
+  [:ul (map-indexed
+         (fn [idx tab] ^{:key idx}
+           [tab-html idx tab])
+         @tablist)])
 
 ; filter the tabs based on query
 (defn filter-tabs [query]
@@ -64,7 +70,7 @@
 (defn render-app []
   [:div
    (tab-input)
-   [:ul (render-tabs)]])
+   [render-tabs]])
 
 (defn init []
   (get-all-tabs)          ; fetch the data
