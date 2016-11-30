@@ -10,18 +10,14 @@
   :plugins [[lein-cljsbuild "1.0.6"]
             [lein-chromebuild "0.3.0"]]
 
-  :source-paths ["src"]
   :cljsbuild {:builds {:main
-                       {:source-paths ["src"]
-                        :compiler {:output-to "target/unpacked/doubleshift.js"
-                                 :output-dir "target/js"}}}}
+                       {:compiler {:output-to "target/unpacked/doubleshift.js"
+                                   :output-dir "target/js"}}}}
   :profiles {:dev {:cljsbuild
                    {:builds {:main
-                     {:source-paths ["src"]
-                      :compiler {:optimizations :whitespace
-                                 :pretty-print true}}}}}
+                             {:compiler {:optimizations :whitespace
+                                         :pretty-print true}}}}}
              :prod {:cljsbuild
-                   {:builds {:main
-                     {:source-paths ["src"]
-                      :compiler {:optimizations :advanced
-                                 :pretty-print false}}}}}})
+                    {:builds {:main
+                              {:compiler {:optimizations :advanced
+                                          :pretty-print false}}}}}})
