@@ -6,16 +6,22 @@
                  [khroma "0.3.0"]
                  [reagent "0.6.0"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]]
+
+  :plugins [[lein-cljsbuild "1.0.6"]
+            [lein-chromebuild "0.3.0"]]
+
   :source-paths ["src"]
-  :profiles {:dev
-             {:plugins [[com.cemerick/austin "0.1.6"]
-                        [lein-cljsbuild "1.0.6"]
-                        [lein-chromebuild "0.3.0"]]
-              :cljsbuild
-              {:builds
-               {:main
-                {:source-paths ["src"]
-                 :compiler {:output-to "target/unpacked/doubleshift.js"
-                            :output-dir "target/js"
-                            :optimizations :whitespace
-                            :pretty-print true}}}}}})
+  :cljsbuild {:builds {:main
+                       {:source-paths ["src"]
+                        :compiler {:output-to "target/unpacked/doubleshift.js"
+                                 :output-dir "target/js"}}}}
+  :profiles {:dev {:cljsbuild
+                   {:builds {:main
+                     {:source-paths ["src"]
+                      :compiler {:optimizations :whitespace
+                                 :pretty-print true}}}}}
+             :prod {:cljsbuild
+                   {:builds {:main
+                     {:source-paths ["src"]
+                      :compiler {:optimizations :advanced
+                                 :pretty-print false}}}}}})
