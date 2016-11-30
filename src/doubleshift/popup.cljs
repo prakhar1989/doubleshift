@@ -26,6 +26,11 @@
           (map #(select-keys % [:url :title :id :favIconUrl]) alltabs)
           (reset! tablist))))))
 
+; makes the dom node (this) visible
+(defn make-visible [this]
+  (console/log this)
+  (console/log (.-offsetTop (r/dom-node this))))
+
 (defn tab-html
   [idx tab]
   (let [{url :url title :title id :id favicon :favIconUrl} tab]
@@ -37,7 +42,7 @@
           [:div
            [:p (trim title)]
            [:a {:href url} (trim url)]]])
-       :component-did-mount #(console/log (.-offsetTop (r/dom-node %))) })))
+       :component-did-update #(if (= idx @selected-index) (make-visible %))})))
 
 (defn render-tabs []
   [:ul (map-indexed
